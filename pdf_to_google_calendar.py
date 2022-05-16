@@ -29,7 +29,7 @@ def parse_pdf(pdf_file: str) -> List[Dict]:
         r"314A|314B|Ballroom|Room A\b|Room B\b|Room C\b|Multipurpose"
     )
 
-    # filter out noisy lines and only keep lines that contain the (1) date, (2)
+    # filter out noise lines and only keep lines that contain the (1) date, (2)
     # the time or (3) the location of an event.
     filtered_text = ""
     for s in text.splitlines():
@@ -46,6 +46,9 @@ def parse_pdf(pdf_file: str) -> List[Dict]:
             # library document for the difference.
             filtered_text += " "
             filtered_text += s.strip()
+        else:
+            # ignore noise line
+            continue
     filtered_text = filtered_text.strip()
 
     # E.g.: "Sunday, June 12, 2022 7:00 PM - 10:00 PM Illini Dancesport Practice Space (Tentative 4/1/2022) 314A"
