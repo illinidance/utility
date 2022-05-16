@@ -105,7 +105,7 @@ def update_calendar(events: List[Dict]):
 
         for event in events:
 
-            # check if it's already existed
+            # check if it already exists
             existing_events = (
                 service.events()
                 .list(
@@ -121,7 +121,7 @@ def update_calendar(events: List[Dict]):
                 if e["summary"] == event["summary"]:
                     event_id = e["id"]
 
-            # update if existed, or create new
+            # update if exists, or create new
             if event_id == None:
                 print(f"Creating: {event}")
                 event = (
