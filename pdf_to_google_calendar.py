@@ -32,8 +32,8 @@ def parse_pdf(pdf_file: str) -> List[Dict]:
         elif time_pattern.match(s) or location_pattern.search(s):
             # followed by time "7:00 PM - 10:00 PM", event name "Illini
             # Dancesport Practice Space (Starting after Aug 4. 2022)" and
-            # location "314B". But somethines this line could be wrapped, so the
-            # location name might be line-broken in the middle. So we have to
+            # location "314B". But sometimes this line could be wrapped, causing
+            # the location name to be line-broken in the middle. So we have to
             # use `.search()` instead of `.match()`. Refer to python `re`
             # library document for the difference.
             filtered_text += " "
