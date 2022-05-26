@@ -21,7 +21,7 @@ def parse_pdf(pdf_file: str) -> List[Dict]:
     date_pattern = re.compile(r"\w+, \w+ \d+, \d{4}")
     # E.g.: "7:00 PM - 10:00 PM Illini Dancesport Practice Space (Tentative 4/1/2022)"
     time_pattern = re.compile(r"\d+:\d+ [AP]M - \d+:\d+ [AP]M")
-    # TODO: Better localtion handling. Currently the location is hardcoded. The
+    # TODO: Better location handling. Currently the location is hardcoded. The
     # difficultly comes from line breaking. Sometimes the location, e.g., "314A"
     # will be in the same line as the `time_pattern`. But sometime it's on a
     # new line.
@@ -66,7 +66,7 @@ def parse_pdf(pdf_file: str) -> List[Dict]:
 
 
 def to_localized_isoformat(m_date: str, m_time: str) -> Dict[str, str]:
-    """Conert time str to dict with ISO format time str and timezone info."""
+    """Convert time str to dict with ISO format time str and timezone info."""
     time_fmt = "%I:%M %p, %A, %B %d, %Y"
     # "7:00 PM, Tuesday, May 17, 2022"
     tz = timezone("US/Central")
