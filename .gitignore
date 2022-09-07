@@ -1,6 +1,8 @@
 venv/
 .ipynb_checkpoints/
-*.pdf
+.DS_Store
 token.json
 credentials.json
+*.pdf
 *.csv
+*.mp3
