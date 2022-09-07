@@ -2,8 +2,7 @@
 
 ## Sync Event Service Space Request Confirmation with Google Calendar
 
-This is a script to synchronize Illini Dancesport's Google Calendar with the input space request confirmation PDF from Illini Union Event Service.
-It parses the PDF, extracts times and locations, and uses Google Calendar API to create or update events.
+[pdf_to_google_calendar.py](pdf_to_google_calendar.py)
 
 Please refer to [Google Calendar Python
 Quickstart](https://developers.google.com/calendar/api/quickstart/python) for
@@ -11,7 +10,7 @@ Authorization setup.
 
 ## Google Contact Sync
 
-TODO
+[contacts.py](contacts.py)
 
 ## Generate Rounds file
 
