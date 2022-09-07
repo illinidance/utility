@@ -8,6 +8,7 @@ import click
 assert which("ffmpeg") is not None
 assert which("lame") is not None
 assert which("youtube-dl") is not None
+assert which("say") is not None
 
 
 @click.group()
