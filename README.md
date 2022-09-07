@@ -43,9 +43,9 @@ python3 rounds.py announce quickstep
 python3 rounds.py announce viennese_waltz
 ```
 
-Make round playlist. See [standard_rounds.txt](standard_rounds.txt) as an example.
+Create a rounds playlist. See [standard_rounds.txt](standard_rounds.txt) as an example.
 
-Create rounds music file using the playlist:
+Concatenate songs in the playlist to create the rounds music file:
 
 ```bash
 python3 rounds.py concat <playlist>
