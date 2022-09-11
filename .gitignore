@@ -6,3 +6,4 @@ credentials.json
 *.pdf
 *.csv
 *.mp3
+tmp_rounds.txt

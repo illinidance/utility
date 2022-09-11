@@ -1,3 +1,4 @@
+import configparser
 import pathlib
 import re
 import subprocess
@@ -20,6 +21,10 @@ def cli():
 @click.argument("input_file", type=click.Path(exists=True, path_type=pathlib.Path))
 @click.option("--start_sec", default=0, type=int)
 def trim(input_file: pathlib.Path, start_sec: int) -> None:
+    _ = _trim(input_file, start_sec)
+
+
+def _trim(input_file: pathlib.Path, start_sec: int) -> pathlib.Path:
     assert input_file.suffix.lower() == ".mp3"
     trimmed_file = input_file.parent / (
         "trimmed_"
@@ -44,6 +49,7 @@ def trim(input_file: pathlib.Path, start_sec: int) -> None:
             str(trimmed_file),
         ]
     )
+    return trimmed_file
 
 
 @click.command()
@@ -96,27 +102,88 @@ def silence(duration: int):
 @cli.command()
 @click.argument("rounds_file", type=click.Path(exists=True, path_type=pathlib.Path))
 def concat(rounds_file: pathlib.Path):
-    output_file = rounds_file.with_suffix(".mp3")
-    subprocess.run(
-        [
-            "ffmpeg",
-            "-f",
-            "concat",
-            "-i",
-            str(rounds_file),
-            "-c",
-            "copy",
-            str(output_file),
-        ]
-    )
+    _concat(rounds_file)
+
+
+def _concat(rounds_file: pathlib.Path, output_file=None):
+    if output_file == None:
+        output_file = rounds_file.with_suffix(".mp3")
+    with open(rounds_file) as f:
+        rounds = [x.strip() for x in f.readlines()]
+    n = len(rounds)
+    filter_complex = ""
+    for i in range(n):
+        filter_complex += f"[{i}:a:0]"
+    filter_complex += f"concat=n={n}:v=0:a=1[outa]"
+    cmd = ["ffmpeg"]
+    for x in rounds:
+        cmd.append("-i")
+        cmd.append(x)
+    cmd.extend(["-filter_complex", filter_complex, "-map", "[outa]", str(output_file)])
+    print(" ".join(cmd))
+    subprocess.run(cmd)
 
 
 @cli.command()
 @click.argument("url", type=str)
-def download(url: str):
-    subprocess.run(
-        ["youtube-dl", "-x", "--embed-thumbnail", "--audio-format", "mp3", url]
-    )
+@click.option("-d", "--dest", type=str, default=None)
+def download(url: str, dest: str):
+    _download(url, dest)
+
+
+def _download(url: str, dest: str) -> None:
+    cmd = [
+        "youtube-dl",
+        "--audio-format",
+        "mp3",
+        "-x",
+        url,
+    ]
+    if dest:
+        cmd.append("--output")
+        cmd.append(dest)
+    subprocess.run(cmd)
+
+
+@cli.command()
+@click.argument("rounds_file", type=click.Path(exists=True, path_type=pathlib.Path))
+@click.option("-r", "--resume", is_flag=True, default=False)
+def run(rounds_file: pathlib.Path, resume: bool):
+    playlist_dir = pathlib.Path("playlists")
+    assert playlist_dir.exists()
+
+    config = configparser.ConfigParser()
+    config.read(rounds_file)
+    output_txt = pathlib.Path("./tmp_rounds.txt")
+    output_mp3 = rounds_file.with_suffix(".mp3")
+    sequence = []
+    for sec in config.sections():
+        url = config[sec]["url"]
+        start_sec = int(config[sec].get("start_sec", "0"))
+        mp3_file = playlist_dir / f"original_{sec}.mp3"
+        announce_mp3_file = playlist_dir / f"announce_{sec}.mp3"
+        silence_mp3_file = playlist_dir / "silence.mp3"
+
+        # download the music
+        if not resume and mp3_file.exists() == False:
+            _download(url, str(mp3_file.with_suffix(".audio")))
+
+        # trim the music
+        trimmed_mp3_file = _trim(mp3_file, start_sec)
+
+        # add to playlist
+        sequence.append(str(announce_mp3_file))
+        sequence.append(str(trimmed_mp3_file))
+        sequence.append(str(silence_mp3_file))
+
+    if sequence[-1].endswith("silence.mp3"):
+        sequence.pop()
+
+    with open(output_txt, "w") as f:
+        for s in sequence:
+            f.write(f"{s}\n")
+
+    _concat(output_txt, output_mp3)
 
 
 cli.add_command(trim)
