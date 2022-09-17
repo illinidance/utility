@@ -14,38 +14,12 @@ Authorization setup.
 
 ## Generate Rounds File
 
-Download mp3 from YouTube:
+Define your round in a `.ini` file. See files in [playlists](playlists) for examples.
+
+Compile and generate the round file:
 
 ```bash
-python3 rounds.py download <url>
+python3 rounds.py run playlists/standard_1.ini
 ```
 
-Trim the mp3 file to 100 sec (optional: select start sec):
-
-```bash
-python3 rounds.py trim <mp3_file> --start_sec=0
-```
-
-Generate 30s silence as break between dances (optional: set length of silence):
-
-```bash
-python3 rounds.py silence --duration=30
-```
-
-Generate announcement before dance:
-
-```bash
-python3 rounds.py announce waltz
-python3 rounds.py announce tango
-python3 rounds.py announce foxtrot
-python3 rounds.py announce quickstep
-python3 rounds.py announce viennese_waltz
-```
-
-Create a rounds playlist. See [standard_rounds.txt](standard_rounds.txt) as an example.
-
-Concatenate songs in the playlist to create the rounds music file:
-
-```bash
-python3 rounds.py concat <playlist>
-```
+which will produce a standard rounds file `standard_1.mp3` in `playlists/`.
