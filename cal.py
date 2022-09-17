@@ -1,10 +1,11 @@
 import datetime
 import os
+import pathlib
 import re
-import sys
 from typing import Dict
 from typing import List
 
+import click
 from google.auth.transport.requests import Request
 from google.oauth2.credentials import Credentials
 from google_auth_oauthlib.flow import InstalledAppFlow
@@ -154,10 +155,19 @@ def update_calendar(events: List[Dict]):
         print("An error occurred: %s" % error)
 
 
-if __name__ == "__main__":
-    if len(sys.argv) != 2:
-        print(f"Usage: python3 {os.path.basename(__file__)} <confirmation_pdf>")
-        exit(1)
-    pdf_file = sys.argv[1]
-    events = parse_pdf(pdf_file)
+@click.group()
+def cli():
+    pass
+
+
+@cli.command()
+@click.argument(
+    "confirmation_pdf", type=click.Path(exists=True, path_type=pathlib.Path)
+)
+def update(confirmation_pdf: pathlib.Path):
+    events = parse_pdf(str(confirmation_pdf))
     update_calendar(events)
+
+
+if __name__ == "__main__":
+    cli()

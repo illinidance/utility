@@ -2,7 +2,7 @@
 
 ## Sync Event Service Space Request Confirmation with Google Calendar
 
-[pdf_to_google_calendar.py](pdf_to_google_calendar.py)
+[cal.py](cal.py)
 
 Please refer to [Google Calendar Python
 Quickstart](https://developers.google.com/calendar/api/quickstart/python) for
