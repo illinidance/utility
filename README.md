@@ -14,12 +14,14 @@ Authorization setup.
 
 ## Generate Rounds File
 
-Define your round in a `.ini` file. See files in [playlists](playlists) for examples.
+Define your playlist in a `.ini` file. See files in [playlists](playlists) for examples.
 
-Compile and generate the round file:
+Then run `python3 rounds.py run <your_playlist>.ini` to download, trim and concatenate songs into one round file.
+
+For example, running
 
 ```bash
 python3 rounds.py run playlists/standard_1.ini
 ```
 
-which will produce a standard rounds file `standard_1.mp3` in `playlists/`.
+will produce a standard rounds file `standard_1.mp3` in `playlists/`.
