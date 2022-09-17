@@ -14,6 +14,23 @@ Authorization setup.
 
 ## Generate Rounds File
 
+### Preparation
+
+Unzip announcement `mp3`s:
+
+```bash
+unzip playlists/announcements.zip -d playlists/
+```
+
+Generate a 30s silence `mp3`:
+
+```bash
+python rounds.py silence --duration=30
+mv silence.mp3 playlists/
+```
+
+### Define playlists and generate rounds files
+
 Define your playlist in a `.ini` file. See files in [playlists](playlists) for examples.
 
 Then run `python3 rounds.py run <your_playlist>.ini` to download, trim and concatenate songs into one round file.
