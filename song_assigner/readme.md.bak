@@ -1,10 +1,9 @@
 
-
 # Song Assigner
 
 1.) Given a list of youtube URLs (see example_song_list.txt), download them. 
 2.) Process the songs to get their BPM and meter.
-3.) Write a file with new playlists built from the songs.
+3.) Write a list 
 
 ``` python main.py --save_folder output --finput example_song_list.txt --foutput example_song_categories.txt ```
 
@@ -15,7 +14,7 @@ Which songs have been downloaded are cached so the command can be repeated if th
 The software uses a 10\% threshold for BPM. If this needs to be more or less specific, please change it in ```main.py```.
 
 ### Installation: 
-```
+
 conda create -n dance python=3.9
 
 conda activate dance
@@ -33,5 +32,5 @@ sudo apt-get install ffmpeg
 
 
 youtube-dl -x --audio-format mp3 https://www.youtube.com/watch?v=zEcVG7WiGzg
-```
+
 
