@@ -2,9 +2,9 @@
 
 # Song Assigner
 
-1.) Given a list of youtube URLs (see example_song_list.txt), download them. 
-2.) Process the songs to get their BPM and meter.
-3.) Write a file with new playlists built from the songs.
+1. Given a list of youtube URLs (see example_song_list.txt), download them. 
+1. Process the songs to get their BPM and meter.
+1. Write a file with new playlists built from the songs.
 
 ``` python main.py --save_folder output --finput example_song_list.txt --foutput example_song_categories.txt ```
 
