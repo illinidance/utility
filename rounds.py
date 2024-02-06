@@ -133,10 +133,12 @@ def download(url: str, dest: str):
 
 def _download(url: str, dest: str) -> None:
     cmd = [
-        "youtube-dl",
+        "yt-dlp",
+        "--extract-audio",
         "--audio-format",
         "mp3",
-        "-x",
+        "--audio-quality",
+        "0",
         url,
     ]
     if dest:
@@ -165,8 +167,9 @@ def run(rounds_file: pathlib.Path, resume: bool):
         silence_mp3_file = playlist_dir / "silence.mp3"
 
         # download the music
-        if not resume and mp3_file.exists() == False:
-            _download(url, str(mp3_file.with_suffix(".audio")))
+        if not resume and mp3_file.exists() is False:
+            # _download(url, str(mp3_file.with_suffix(".audio")))
+            _download(url, str(mp3_file))
 
         # trim the music
         trimmed_mp3_file = _trim(mp3_file, start_sec)
