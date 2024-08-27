@@ -8,3 +8,4 @@ credentials.json
 *.csv
 *.mp3
 tmp_rounds.txt
+tmp/
