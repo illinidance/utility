@@ -58,8 +58,6 @@ utility on main $ ls -al data
 
 These files are required for `just standard-round` and `just latin-round` to work properly.
 
-Now you're all set to generate ballroom dance rounds! 🎵✨
-
 ## Rounds file generation
 
 This section outlines the complete workflow for setting up and generating ballroom dance rounds using the `just` commands.
@@ -116,7 +114,7 @@ just trim tmp/rumba.mp3 10 110
 just trim tmp/jive.mp3 10 110
 ```
 
-The starting and ending times may vary for each dance. Adjust as needed.
+You can choose different starting and ending times for each dance to your liking. Adjust as needed.
 
 Trimmed versions will be saved as `tmp/trimmed_<dance>.mp3`.
 
